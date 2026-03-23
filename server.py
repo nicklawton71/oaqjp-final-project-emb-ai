@@ -11,7 +11,7 @@ app = Flask("Emotion Detector")
 
 @app.route("/emotionDetector")
 def detect_emotion():
-        ''' This code receives the text from the HTML interface and 
+    ''' This code receives the text from the HTML interface and 
         runs the emotion detector over it using emotion_detector()
         function. The output returned shows the score for each emotion
         and the dominant emotion.
@@ -30,13 +30,16 @@ def detect_emotion():
     sadness_score = response["sadness"]
     dominant_emotion = response["dominant_emotion"]
 
-    return (
-        f"For the given statement, the system response is "
-        f"'anger': {anger_score}, 'disgust': {disgust_score}, "
-        f"'fear': {fear_score}, 'joy': {joy_score} and "
-        f"'sadness': {sadness_score}. "
-        f"The dominant emotion is {dominant_emotion}."
-    )
+    if dominant_emotion is None:
+        return "Invalid text! Please try again!"
+    else:
+        return (
+            f"For the given statement, the system response is "
+            f"'anger': {anger_score}, 'disgust': {disgust_score}, "
+            f"'fear': {fear_score}, 'joy': {joy_score} and "
+            f"'sadness': {sadness_score}. "
+            f"The dominant emotion is {dominant_emotion}."
+        )
 
 @app.route("/")
 def render_index_page():
